@@ -1,0 +1,28 @@
+.dashboard {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.counter {
+  text-align: center;
+  font-weight: 400;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.table {
+  margin: 10px auto;
+}
+
+.tbody {
+  composes: table;
+  border: 1px solid #000;
+}
