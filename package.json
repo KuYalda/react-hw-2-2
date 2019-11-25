@@ -49,5 +49,5 @@
     "lint-staged": "^9.4.3",
     "prettier": "^1.19.1"
   },
-  "homepage": "https://kuyalda.github.io/goit-fe-course/react/"
+  "homepage": "https://kuyalda.github.io/react-hw-2-2/"
 }
