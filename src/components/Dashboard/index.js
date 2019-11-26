@@ -10,44 +10,40 @@ const shortid = require('shortid');
 
 toast.configure();
 
+const toastSettings = {
+  position: 'top-center',
+  autoClose: 2500,
+  pauseOnHover: false,
+};
+const error = () =>
+  toast('На счету недостаточно средств для проведения операции!', {
+    ...toastSettings,
+    type: toast.TYPE.ERROR,
+  });
+const warning = () =>
+  toast('Введите корректную сумму для проведения операции!', {
+    ...toastSettings,
+    type: toast.TYPE.WARNING,
+  });
 export default class Dashboard extends Component {
   state = {
     transactions: [],
     balance: 0,
   };
 
-  operation = e => {
-    const { value } = e.target.parentElement.firstElementChild;
-    e.target.parentElement.firstElementChild.value = null;
-    const depType = e.target.textContent;
+  operation = (sum, depType) => {
     const newTransaction = {
       id: shortid.generate(),
       type: depType,
-      amount: Number(value),
+      amount: sum,
       date: new Date().toLocaleString(),
     };
-    const toastSettings = {
-      position: 'top-center',
-      autoClose: 2500,
-      pauseOnHover: false,
-    };
-    const error = () =>
-      toast('На счету недостаточно средств для проведения операции!', {
-        ...toastSettings,
-        type: toast.TYPE.ERROR,
-      });
-    const warning = () =>
-      toast('Введите корректную сумму для проведения операции!', {
-        ...toastSettings,
-        type: toast.TYPE.WARNING,
-      });
-
     this.setState(ps => {
-      if (depType === 'Withdraw' && value > ps.balance) {
+      if (depType === 'Withdraw' && sum > ps.balance) {
         error();
         return {};
       }
-      if ((depType === 'Withdraw' || depType === 'Deposit') && value > 0) {
+      if ((depType === 'Withdraw' || depType === 'Deposit') && sum > 0) {
         return {
           transactions: [newTransaction, ...ps.transactions],
           balance:
@@ -74,7 +70,6 @@ export default class Dashboard extends Component {
   };
 
   render() {
-    // console.log('Dashbord.props :', this.props);
     const { balance, transactions } = this.state;
     return (
       <div className={s.dashboard}>
