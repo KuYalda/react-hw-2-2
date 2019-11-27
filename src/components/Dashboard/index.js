@@ -31,6 +31,25 @@ export default class Dashboard extends Component {
     balance: 0,
   };
 
+  componentDidMount() {
+    const oldState = localStorage.getItem('oldState');
+
+    if (oldState) {
+      this.setState({ ...JSON.parse(oldState) });
+    }
+    // oldState
+    //   ? this.setState({ ...JSON.parse(oldState) })
+    //   : console.log('false :', false);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      localStorage.setItem('oldState', JSON.stringify(this.state));
+    }
+    // prevState !== this.state &&
+    //   localStorage.setItem('oldState', JSON.stringify(this.state));
+  }
+
   operation = (sum, depType) => {
     const newTransaction = {
       id: shortid.generate(),
